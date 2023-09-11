@@ -2,45 +2,75 @@ const taskService = require('../services/task.service');
 
 const createTask = async (req, res) => {
   const { title, description, status } = req.body;
+  // envia uma requisição à camada service para criar uma tarefa, retorna um erro se necessário
+  try {
+    const response = await taskService.createTask(title, description, status);
+    // caso type exista, significa que um erro ocorreu na camada service e será retornado o código do erro junto de uma mensagem. O mesmo ocorre para as outras funções abaixo.
+    if (response.type) {
+      return res.status(response.type).json({ message: response.message });
+    }
 
-  const response = await taskService.createTask(title, description, status);
-
-  if (response.type) {
-    return res.status(response.type).json({ message: response.message });
+    return res.status(201).json(response.message);
+  } catch (error) {
+    return res.status(500).json({ error: 'Error while creating a new task.' });
   }
-
-  return res.status(201).json(response.message);
 };
 
-const getTasks = async (_req, res) => {
-  const tasks = await taskService.getTasks();
+const getTasks = async (req, res) => {
+  const { status } = req.query;
 
-  return res.status(200).json(tasks);
+  try {
+    // verifica se queryParams foram adicionados a requisição e chama a função correspondente
+    if (status) {
+      const response = await taskService.getTasksByStatus(status);
+      if (response.type) {
+        return res.status(response.type).json({ message: response.message });
+      }
+
+      return res.status(200).json(response);
+    }
+    // busca todas as tarefas presentes no banco de dados
+    const tasks = await taskService.getTasks();
+    return res.status(200).json(tasks);
+  } catch (error) {
+    // Caso ocorra um erro não monitorado
+    return res.status(500).json({ error: 'Error while fetching tasks.' });
+  }
 };
 
 const updatedtask = async (req, res) => {
   const { id } = req.params;
   const { description, status } = req.body;
 
-  const response = await taskService.updateTask(id, description, status);
+  try {
+    const response = await taskService.updateTask(id, description, status);
 
-  if (response.type) {
-    return res.status(response.type).json({ message: response.message });
+    if (response.type) {
+      return res.status(response.type).json({ message: response.message });
+    }
+
+    return res.status(200).json({ message: response.message });
+  } catch (error) {
+    // Caso ocorra um erro não monitorado
+    return res.status(500).json({ error: 'Error while updating the task.' });
   }
-
-  return res.status(200).json({ message: response.message });
 };
 
 const deleteTask = async (req, res) => {
   const { id } = req.params;
 
-  const response = taskService.deleteTask(id);
+  try {
+    const response = await taskService.deleteTask(id);
 
-  if (response.type) {
-    return res.status(response.type).json({ message: response.message });
+    if (response.type) {
+      return res.status(response.type).json({ message: response.message });
+    }
+
+    return res.status(204).json();
+  } catch (error) {
+    // Caso ocorra um erro não monitorado
+    return res.status(500).json({ error: 'Error while deleting the task.' });
   }
-
-  return res.status(204).json();
 };
 
 module.exports = {

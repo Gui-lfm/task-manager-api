@@ -1,3 +1,4 @@
+// middleware responsável por verificar se a requisição possui o campo status
 module.exports = (req, res, next) => {
   const { status } = req.body;
 

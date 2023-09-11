@@ -8,7 +8,12 @@ const createTask = async (title, description, taskStatus) => {
   if (!validateStatus(taskStatus)) {
     return { type: 400, message: 'Invalid status format' };
   }
-  const newTask = await Task.create({ title, description, status:taskStatus, token });
+  const newTask = await Task.create({
+    title,
+    description,
+    status: taskStatus,
+    token,
+  });
 
   return { type: null, message: newTask };
 };
@@ -16,6 +21,7 @@ const createTask = async (title, description, taskStatus) => {
 // get all tasks
 const getTasks = () => Task.findAll();
 
+// get task by id
 const getTaskById = async (id) => {
   const task = await Task.findByPk(id);
 
@@ -24,6 +30,21 @@ const getTaskById = async (id) => {
   }
 
   return { type: null, message: task };
+};
+
+// filter tasks by status
+const getTasksByStatus = async (status) => {
+  if (!validateStatus(taskStatus)) {
+    return { type: 400, message: 'Invalid status format' };
+  }
+
+  const tasks = await Task.findAll({ where: { status } });
+
+  if (tasks.length === 0) {
+    return { type: 404, message: 'No tasks were found with requested status' };
+  }
+
+  return { type: null, message: tasks };
 };
 
 // update task
@@ -52,6 +73,7 @@ module.exports = {
   createTask,
   getTasks,
   getTaskById,
+  getTasksByStatus,
   updateTask,
   deleteTask,
 };

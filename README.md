@@ -22,21 +22,27 @@ As seguintes ferramentas foram utilizadas na construção do projeto:
 
 ## ↗️ Endpoints
 
-```
-/tasks
-```
+### /task
 
 - Utilizando o método GET:
   - Retorna um JSON com todas as tarefas armazenadas no banco de dados;
-  - soon
+  - É possível filtrar as tarefas pelo seu status, mostrando somente as concluídas, em andamento ou pendentes utilizando query strings ex: ```task?status=concluída```
+
 - Utilizando o método POST:
   - Deve inserir uma tarefa no banco de dados. Para que a requisição ocorra, deve estar presente no corpo da requisição os campos title, description e status, todos do tipo string;
   - Caso algum do campos solicitados não estejam presentes, retorna um erro de código 400;
   - Caso a inserção ocorra com sucesso, retorna o código 201 junto da tarefa inserida no banco de dados e um token que deve ser utlizado nas operações de edição e remoção da tarefa criada.
+  - O corpo da requisição deverá seguir o formato abaixo:
+  
+  ```json
+  {
+  "title": "Faxina",
+  "description": "limpeza semanal da casa",
+  "status": "concluída"
+  }
+  ```
 
-```
-/tasks/:id
-```
+### /task/:id
 
 - Utilizando o método PATCH:
   - Responsável por editar uma tarefa existente no banco de dados;
@@ -46,6 +52,15 @@ As seguintes ferramentas foram utilizadas na construção do projeto:
   - Caso o id especificado não corresponda a nenhuma tarefa, retorna um erro de código 404;
   - Caso os campos de edição não estejam presentes, retorna um erro de código 400;
   - Em caso de sucesso, retorna o código 200 junto da tarefa editada.
+  - O corpo da requisição deve possuir o seguinte formato:
+  
+  ```json
+  {
+  "description": "limpeza quinzenal da casa",
+  "status": "em andamento"
+  }
+  ```
+
 - Utilizando o método DELETE:
   - Responsável por remover uma tarefa existente no banco de dados;
   - A tarefa deletada será correspondente ao id especificado no parâmetro da URL;
