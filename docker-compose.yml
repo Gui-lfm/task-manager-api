@@ -19,6 +19,7 @@ services:
       - DB_USER=root
       - DB_PASSWORD=password
       - SERVER_PORT=3001
+      - JWT_SECRET=secretToken
     volumes:
       - ./:/app
     working_dir: /app
