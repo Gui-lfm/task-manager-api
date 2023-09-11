@@ -1,11 +1,12 @@
 # Task manager API
 
-## Sobre:
+## Sobre
 
-<p align="justify"> Trata-se de uma API rest responsável por armazenar tarefas do usuário. Cada tarefa possui um titulo, uma descrição e um status que pode  constar como concluído, em progresso e pendente. Além disso, cada tarefa apresenta um token que deve ser usado como referência em algumas das operações da aplicação. 
+<p align="justify"> Trata-se de uma API rest responsável por armazenar tarefas do usuário. Cada tarefa possui um titulo, uma descrição e um status que pode  constar como concluído, em progresso e pendente. Além disso, cada tarefa apresenta um token que deve ser usado como referência em algumas das operações da aplicação.
 A API é capaz de criar novas tarefas, listar as tarefas armazenadas no banco de dados, editar e excluir tarefas. </p>
 
-## 🛠 Tecnologias e libs utilizadas:
+## 🛠 Tecnologias e libs utilizadas
+
 As seguintes ferramentas foram utilizadas na construção do projeto:
 
 - [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
@@ -16,6 +17,7 @@ As seguintes ferramentas foram utilizadas na construção do projeto:
 - [express](https://expressjs.com/pt-br/)
 
 ## ⚙️ Instalação
+
 --em breve
 
 ## ↗️ Endpoints
@@ -23,6 +25,7 @@ As seguintes ferramentas foram utilizadas na construção do projeto:
 ```
 /tasks
 ```
+
 - Utilizando o método GET:
   - Retorna um JSON com todas as tarefas armazenadas no banco de dados;
   - soon
@@ -30,10 +33,11 @@ As seguintes ferramentas foram utilizadas na construção do projeto:
   - Deve inserir uma tarefa no banco de dados. Para que a requisição ocorra, deve estar presente no corpo da requisição os campos title, description e status, todos do tipo string;
   - Caso algum do campos solicitados não estejam presentes, retorna um erro de código 400;
   - Caso a inserção ocorra com sucesso, retorna o código 201 junto da tarefa inserida no banco de dados e um token que deve ser utlizado nas operações de edição e remoção da tarefa criada.
- 
+
 ```
 /tasks/:id
 ```
+
 - Utilizando o método PATCH:
   - Responsável por editar uma tarefa existente no banco de dados;
   - A tarefa editada será correspondente ao id especificado no parâmetro da URL;
