@@ -18,7 +18,48 @@ As seguintes ferramentas foram utilizadas na construção do projeto:
 
 ## ⚙️ Instalação
 
---em breve
+Antes de iniciar, certifique-se de ter o docker e docker-compose instalados em seu computador.
+
+1. Clone este repostório em seu computador local:
+
+```bash
+git clone git@github.com:Gui-lfm/task-manager-api.git
+cd task-manager-api
+```
+
+2. Execute o Docker Compose para iniciar os serviços da aplicação:
+
+```bash
+docker-compose up -d --build
+```
+3. Acesse o container node gerado pelo compose:
+
+```bash
+docker exec -it api bash
+```
+
+4. Dentro do container, instale as dependências:
+
+```bash
+npm install
+```
+5.Execute as migrações do banco de dados para criar as tabelas necessárias:
+
+```bash
+npx sequelize db:migrate
+```
+
+6. Execute os seeders para preencher o banco de dados com dados de exemplo:
+
+```bash
+npx sequelize db:seed:all
+```
+7. Por fim, inicie a api com o nodemon
+
+```bash
+npm run dev
+```
+O servidor agora deve estar em execução em http://localhost:3001
 
 ## ↗️ Endpoints
 
